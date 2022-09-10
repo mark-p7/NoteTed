@@ -21,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!loadingUser) {
-      console.log(user)
+      // console.log(user)
       if (user) {
         router.push("/dashboard")
       }
@@ -43,7 +43,7 @@ export default function Home() {
       </Head>
 
       <main>
-        Home Page!
+        <h1>This is the Home Page!~</h1>
         <Link href={`/signup`} passHref>
         <a>Signup!</a>
       </Link>
@@ -58,18 +58,18 @@ export default function Home() {
       `}</style>
 
       <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
+        // html,
+        // body {
+        //   padding: 0;
+        //   margin: 0;
+        //   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        //     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        //     sans-serif;
+        // }
 
-        * {
-          box-sizing: border-box;
-        }
+        // * {
+        //   box-sizing: border-box;
+        // }
       `}</style>
     </div>
   )

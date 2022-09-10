@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { createFirebaseApp } from '../firebase/clientApp'
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
+import { getFirestore, setDoc, doc } from 'firebase/firestore'
 
 export const UserContext = createContext()
 
@@ -31,12 +32,18 @@ export default function UserContextComp({ children }) {
     }
   }
 
-  function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
-  }
-
-  function getUser() {
-    return auth.currentUser
+  async function signUp(email, password) {
+    return createUserWithEmailAndPassword(auth, email, password).then((cred) => {
+      const user = cred.user
+      const db = getFirestore()
+      setDoc(doc(db, 'users', user.uid), {
+          email: user.email,
+          notes: []
+      })
+      console.log("user added to firestore")
+    }).catch((err)=>{
+      console.log(err.message)
+    })
   }
 
   useEffect(() => {
@@ -61,7 +68,7 @@ export default function UserContextComp({ children }) {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, setUser, loadingUser, login, signUp, signOutOfUser, getUser }}>
+    <UserContext.Provider value={{ user, setUser, loadingUser, login, signUp, signOutOfUser }}>
       {children}
     </UserContext.Provider>
   )
