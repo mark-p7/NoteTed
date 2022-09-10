@@ -13,38 +13,38 @@ function Dashboard() {
 
     useEffect(async () => {
         if (!loadingUser) {
-            // console.log(user)
-            // console.log(getDoc(doc(db, 'users', user.uid)))
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
-
-            // console.log("Document data:", docSnap.data());
-            try {
-                let notesArray = docSnap.data().notes
-                if (notesArray != 0) {
-                    const noteQuery = query(collection(db, "notes"), where("NoteID", "in", notesArray));
-                    const querySnapshot = await getDocs(noteQuery);
-
-                    var jsxNotesArray = []
-                    querySnapshot.forEach((doc) => {
-                        let data = doc.data()
-                        // console.log(doc.id, " => ", doc.data());
-                        jsxNotesArray.push(
-                            {
-                                id: doc.id,
-                                title: data.NoteTitle,
-                                content: data.NoteContent
-                            }
-                        )
-                    });
-                    setNotes(jsxNotesArray)
-                }
-            } catch (err) {
-                console.log(err)
-            }
-
             if (!user) {
                 router.push("/signup")
+            } else {
+                
+                // console.log(getDoc(doc(db, 'users', user.uid)))
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                // console.log("Document data:", docSnap.data());
+                try {
+                    let notesArray = docSnap.data().notes
+                    if (notesArray != 0) {
+                        const noteQuery = query(collection(db, "notes"), where("NoteID", "in", notesArray));
+                        const querySnapshot = await getDocs(noteQuery);
+
+                        var jsxNotesArray = []
+                        querySnapshot.forEach((doc) => {
+                            let data = doc.data()
+                            // console.log(doc.id, " => ", doc.data());
+                            jsxNotesArray.push(
+                                {
+                                    id: doc.id,
+                                    title: data.NoteTitle,
+                                    content: data.NoteContent
+                                }
+                            )
+                        });
+                        setNotes(jsxNotesArray)
+                    }
+                } catch (err) {
+                    console.log(err)
+                }
             }
         }
 
@@ -59,7 +59,7 @@ function Dashboard() {
             <h1>Dashboard</h1>
             <button onClick={() => router.push("/note")}>Create a new Note</button>
             <div>
-            {notes.map(note =>
+                {notes.map(note =>
                     <div key={note.id} style={{ padding: '20px', border: '1px solid black', margin: '10px' }}>
                         <h1>
                             {note.title}
