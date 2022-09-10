@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { createFirebaseApp } from '../firebase/clientApp'
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export const UserContext = createContext()
 
@@ -11,18 +11,24 @@ export function useUser() {
 }
 
 export default function UserContextComp({ children }) {
-    // Listen authenticated user
+  // Listen authenticated user
   const app = createFirebaseApp()
   const auth = getAuth(app)
-    
+
   const [user, setUser] = useState(null)
   const [loadingUser, setLoadingUser] = useState(true) // Helpful, to update the UI accordingly.
 
   function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
   }
-  function signOut() {
-    return auth.signOut;
+
+  async function signOutOfUser() {
+    try {
+      await signOut(auth)
+      console.log("Sign-Out Successful")
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   function signUp(email, password) {
@@ -32,7 +38,7 @@ export default function UserContextComp({ children }) {
   function getUser() {
     return auth.currentUser
   }
-  
+
   useEffect(() => {
     const unsubscriber = onAuthStateChanged(auth, async (user) => {
       try {
@@ -55,7 +61,7 @@ export default function UserContextComp({ children }) {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, setUser, loadingUser, login, signUp, signOut, getUser }}>
+    <UserContext.Provider value={{ user, setUser, loadingUser, login, signUp, signOutOfUser, getUser }}>
       {children}
     </UserContext.Provider>
   )

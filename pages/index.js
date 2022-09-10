@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 
 export default function Home() {
 
-  // Initialize Router
   const router = useRouter()
 
   // Link to Serverside Route
@@ -18,28 +17,23 @@ export default function Home() {
   // Create User
   // <button onClick={createUser}>Create 'nextjs_user'</button>
 
-  // Our custom hook to get context values
   const { loadingUser, user } = useUser()
-
-  const profile = { username: 'nextjs_user', message: 'Awesome!!' }
 
   useEffect(() => {
     if (!loadingUser) {
-      // You know that the user is loaded: either logged in or out!
       console.log(user)
-      if (!user) {
-        router.push("/signup")
+      if (user) {
+        router.push("/dashboard")
       }
     }
-    // You also have your firebase app initialized
   }, [loadingUser, user])
 
-  const createUser = async () => {
-    const db = getFirestore()
-    await setDoc(doc(db, 'profile', profile.username), profile)
+  // const createUser = async () => {
+  //   const db = getFirestore()
+  //   await setDoc(doc(db, 'profile', profile.username), profile)
 
-    alert('User created!!')
-  }
+  //   alert('User created!!')
+  // }
 
   return (
     <div className="container">
@@ -49,9 +43,16 @@ export default function Home() {
       </Head>
 
       <main>
-      Hello, {user.email}
+        Home Page!
+        <Link href={`/signup`} passHref>
+        <a>Signup!</a>
+      </Link>
+      <p>or</p>
+      <Link href={`/signin`} passHref>
+        <a>Signin!</a>
+      </Link>
       </main>
-
+      
       <style jsx>{`
         // Styling here
       `}</style>

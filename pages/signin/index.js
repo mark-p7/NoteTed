@@ -3,40 +3,44 @@ import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 
-function Signup() {
+function SignIn() {
     const router = useRouter()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { signUp, loadingUser, user } = useUser()
+    const { login, loadingUser, user } = useUser()
 
-    const handleSignup = async (e) => {
+    const handleSignIn = async (e) => {
+        console.log(email + " " + password)
         e.preventDefault()
         try {
-            await signUp(email, password)
+            await login(email, password)
         } catch (err) {
             console.log(err.message)
-            if (err.message === "Firebase: Error (auth/email-already-in-use).") {
-                console.log("Email is ALREADY in use")
+            if (err.message === "Firebase: Error (auth/wrong-password).") {
+                console.log("Password is wrong")
+            }
+            if (err.message === "Firebase: Error (auth/user-not-found).") {
+                console.log("Email not found")
             }
         }
     }
 
     useEffect(() => {
-      if (!loadingUser) {
-        console.log(user)
-        if (user) {
-          router.push("/dashboard")
+        if (!loadingUser) {
+            console.log(user)
+            if (user) {
+                router.push("/dashboard")
+            }
         }
-      }
     }, [loadingUser, user])
 
     return (
         <div>
             <h1>
-                Signup
+                SignIn
             </h1>
 
-            <form onSubmit={handleSignup}>
+            <form onSubmit={handleSignIn}>
                 <input
                     type="text"
                     onChange={(e) => setEmail(e.target.value)}
@@ -52,4 +56,4 @@ function Signup() {
     )
 }
 
-export default Signup
+export default SignIn
