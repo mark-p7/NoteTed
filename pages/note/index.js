@@ -1,5 +1,4 @@
-import { async } from '@firebase/util'
-import { doc, getFirestore, setDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import { doc, getFirestore, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
@@ -12,25 +11,21 @@ function Note() {
 
     useEffect(() => {
         if (!loadingUser) {
-            // console.log(user)
             if (!user) {
                 router.push("/signup")
             }
         }
     }, [loadingUser, user])
 
+    function delay(n) {
+        return new Promise(function (resolve) {
+            setTimeout(resolve, n * 1000);
+        });
+    }
+
     const handleNewNote = async (e) => {
         e.preventDefault()
-        // const createUser = async () => {
-        //   const db = getFirestore()
-        //   await setDoc(doc(db, 'profile', profile.username), profile)
-
-        //   alert('User created!!')
-        // }
-        console.log(noteTitle)
-        console.log(noteContent)
         let noteID = Math.random().toString(36).slice(2)
-        console.log(noteID)
         const createNote = async () => {
             const db = getFirestore()
             await setDoc(doc(db, 'notes', noteID), {
@@ -41,7 +36,8 @@ function Note() {
                 updateDoc(doc(db, 'users', user.uid), {
                     notes: arrayUnion(noteID)
                 })
-            }).then(() => {
+            }).then(async () => {
+                await delay(1);
                 router.push('/dashboard')
             })
         }

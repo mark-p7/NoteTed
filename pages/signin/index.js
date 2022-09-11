@@ -1,4 +1,3 @@
-import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
@@ -10,7 +9,6 @@ function SignIn() {
     const { login, loadingUser, user } = useUser()
 
     const handleSignIn = async (e) => {
-        console.log(email + " " + password)
         e.preventDefault()
         try {
             await login(email, password)
@@ -27,7 +25,6 @@ function SignIn() {
 
     useEffect(() => {
         if (!loadingUser) {
-            console.log(user)
             if (user) {
                 router.push("/dashboard")
             }

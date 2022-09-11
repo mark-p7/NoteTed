@@ -1,6 +1,5 @@
-import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
-import { React, useRef, useState, useEffect } from 'react'
+import { React, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 
 function Profile() {
@@ -9,7 +8,6 @@ function Profile() {
 
     useEffect(() => {
         if (!loadingUser) {
-            console.log(user)
             if (!user) {
                 router.push("/")
             }

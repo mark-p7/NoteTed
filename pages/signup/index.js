@@ -1,4 +1,3 @@
-import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
@@ -22,12 +21,11 @@ function Signup() {
     }
 
     useEffect(() => {
-      if (!loadingUser) {
-        console.log(user)
-        if (user) {
-          router.push("/dashboard")
+        if (!loadingUser) {
+            if (user) {
+                router.push("/dashboard")
+            }
         }
-      }
     }, [loadingUser, user])
 
     return (
@@ -35,7 +33,6 @@ function Signup() {
             <h1>
                 Signup
             </h1>
-
             <form onSubmit={handleSignup}>
                 <input
                     type="text"

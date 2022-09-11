@@ -1,9 +1,9 @@
-import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
-import { React, useRef, useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 import { collection, query, where, getDocs, getFirestore, getDoc, doc } from "firebase/firestore";
 import Link from 'next/link'
+import { deleteNote } from '../../deleteData/deleteNote'
 
 function Dashboard() {
     const router = useRouter()
@@ -16,12 +16,8 @@ function Dashboard() {
             if (!user) {
                 router.push("/signup")
             } else {
-                
-                // console.log(getDoc(doc(db, 'users', user.uid)))
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
-
-                // console.log("Document data:", docSnap.data());
                 try {
                     let notesArray = docSnap.data().notes
                     if (notesArray != 0) {
@@ -31,7 +27,6 @@ function Dashboard() {
                         var jsxNotesArray = []
                         querySnapshot.forEach((doc) => {
                             let data = doc.data()
-                            // console.log(doc.id, " => ", doc.data());
                             jsxNotesArray.push(
                                 {
                                     id: doc.id,
@@ -50,9 +45,14 @@ function Dashboard() {
 
     }, [loadingUser, user])
 
-    // console.log(userDoc)
-    // const noteQuery = query(collection(db, "notes"), where("NoteID", "in", userDoc.notes));
-    // const querySnapshot = async => getDocs(noteQuery);
+    const handleDeleteNote = async (noteId) => {
+        const delNote = async () => {
+            let userId = user.uid
+            await deleteNote({ db, noteId, userId })
+        }
+        await delNote();
+        router.reload(window.location.pathname)
+    }
 
     return (
         <div>
@@ -67,6 +67,17 @@ function Dashboard() {
                         <p>
                             {note.content}
                         </p>
+                        <Link href={`/note/${note.id}`} passHref>
+                            <a>
+                                <button>
+                                    edit
+                                </button>
+                            </a>
+                        </Link>
+                        <br />
+                        <button onClick={() => handleDeleteNote(note.id)}>
+                            delete
+                        </button>
                     </div>)}
             </div>
         </div>
