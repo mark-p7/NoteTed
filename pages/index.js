@@ -1,14 +1,21 @@
 import Head from 'next/head'
-import Link from '../src/Link';
+// import Link from '../src/Link';
 import { useEffect } from 'react'
 import { useUser } from '../context/userContext'
 import { useRouter } from 'next/router'
 import { Stack, Button, useTheme } from '@mui/material'
+import Link from 'next/link'
 
 
 export default function Home() {
   const theme = useTheme()
+  //   <Link href="/about">
+  //      <a>About Us</a>
+  //   </Link>
   // console.log(theme.palette.primary.main);
+  //   <Button variant="contained" component={Link} noLinkStyle href="/signup">
+  //      SIGN UP
+  //   </Button>
   const router = useRouter()
   const { loadingUser, user } = useUser()
 
@@ -35,21 +42,31 @@ export default function Home() {
           spacing={2}
         >
 
-          <div>
-            <div id='title-div'>
-              <div>
-                <h1 style={{ fontSize: '120px', margin: '0px', padding: '0px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>NOTETED </h1>
-              </div>
+          <div id='title-div'>
+            <div>
+              <h1 className='title-header' style={{
+                fontSize: '120px',
+                margin: '0px',
+                padding: '0px',
+                fontWeight: '400',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                textShadow: '4px 4px #CAC8C8'
+              }}
+              >NOTETED </h1>
             </div>
           </div>
 
-          <Button variant="text" component={Link} noLinkStyle href="/signin">
-            LOGIN
-          </Button>
 
-          <Button variant="contained" component={Link} noLinkStyle href="/signup">
-            SIGN UP
-          </Button>
+          <Link href="/signin">
+            <a className='styled-link'>LOGIN</a>
+          </Link>
+
+          <Link href="/signup">
+            <a className='styled-link'>SIGN UP</a>
+          </Link>
 
         </Stack>
       </main>
@@ -59,11 +76,38 @@ export default function Home() {
       `}</style>
 
       <style jsx global>{`
+        .styled-link {
+          font-size: 15px;
+          font-weight: 400;
+          color: #000000;
+          text-transform: uppercase;
+          text-decoration: none;
+          letter-spacing: 0.15em;
+          display: inline-block;
+          padding: 15px 20px;
+          position: relative;
+        }
+        .styled-link:after {    
+          background: none repeat scroll 0 0 transparent;
+          bottom: 0;
+          content: "";
+          display: block;
+          height: 2px;
+          left: 50%;
+          position: absolute;
+          background: #000;
+          transition: width 0.3s ease 0s, left 0.3s ease 0s;
+          width: 0;
+        }
+        .styled-link:hover:after { 
+          width: 100%; 
+          left: 0;
+        }
         #title-div {
             position: relative;
             height: 250px;
             width: 700px;
-            margin: auto;
+            margin: auto auto 100px auto;
             color: ${theme.palette.secondary.main};
             text-align: center;
         }
