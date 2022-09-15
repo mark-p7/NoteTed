@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
+import Head from 'next/head'
 
 function Signup() {
     const router = useRouter()
@@ -30,6 +31,10 @@ function Signup() {
 
     return (
         <div>
+            <Head>
+                <title>Signup</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <h1>
                 Signup
             </h1>
