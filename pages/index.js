@@ -5,7 +5,7 @@ import { useUser } from '../context/userContext'
 import { useRouter } from 'next/router'
 import { Stack, Button, useTheme } from '@mui/material'
 import Link from 'next/link'
-
+import { TitleDiv, TitleHeader } from './HomePageStyles'
 
 export default function Home() {
   const theme = useTheme()
@@ -42,22 +42,13 @@ export default function Home() {
           spacing={2}
         >
 
-          <div id='title-div'>
+          <TitleDiv>
             <div>
-              <h1 className='title-header' style={{
-                fontSize: '120px',
-                margin: '0px',
-                padding: '0px',
-                fontWeight: '400',
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                textShadow: '4px 4px #CAC8C8'
-              }}
-              >NOTETED </h1>
+              <TitleHeader>
+                NoteTed
+              </TitleHeader>
             </div>
-          </div>
+          </TitleDiv>
 
 
           <Link href="/signin">
@@ -102,43 +93,6 @@ export default function Home() {
         .styled-link:hover:after { 
           width: 100%; 
           left: 0;
-        }
-        #title-div {
-            position: relative;
-            height: 250px;
-            width: 700px;
-            margin: auto auto 100px auto;
-            color: ${theme.palette.secondary.main};
-            text-align: center;
-        }
-        #title-div::before, #title-div::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            // z-index: -1;
-            // margin: -5%;
-            box-shadow: inset 0 0 0 2px;
-            animation: clipMe 8s linear infinite;
-        }
-        #title-div::before {
-            animation-delay: -4s;
-        }
-        @keyframes clipMe {
-            0%, 100% {
-              clip-path: inset(0 99% 0 0);
-            }
-            25% {
-              clip-path: inset(99% 0 0 0);
-            }
-            50% {
-              clip-path: inset(0 0 0 99%);
-            }
-            75% {
-              clip-path: inset(0 0 99% 0);
-            }
         }
       `}</style>
     </div>
