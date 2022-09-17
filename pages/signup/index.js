@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 import Head from 'next/head'
 
+
 function Signup() {
     const router = useRouter()
     const [email, setEmail] = useState("");
