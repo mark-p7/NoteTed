@@ -58,6 +58,41 @@ const SignupLoginButton = styled(Button)({
     }
 });
 
+const SignupTitle = styled('h1')({
+    fontFamily: "'Poppins', sans-serif",
+    fontWeight: '400',
+    letterSpacing: '3px',
+    padding: '0px 20px 0px 0px',
+    margin: '0',
+    position: 'absolute',
+    bottom: '0',
+    right: '0',
+    fontSize: '120px',
+    ['@media (max-width:680px)']: { // eslint-disable-line no-useless-computed-key
+        fontSize: '80px',
+        right: 'auto',
+        width: 'auto',
+        padding: '0',
+        width: '100%',
+        textAlign: 'center'
+    },
+    ['@media (max-width:450px)']: { // eslint-disable-line no-useless-computed-key
+        fontSize: '50px',
+    }
+});
+
+const BodyContainer = styled('div')({
+    display: 'grid',
+    gridTemplateColumns: '60% 40%',
+    width: '900px',
+    ['@media (max-width:680px)']: { // eslint-disable-line no-useless-computed-key
+        gridTemplateColumns: 'none',
+        gridTemplateRows: '30% 70%',
+        height: '90vh',
+        width: '400px'
+    }
+});
+
 function Signup() {
     const router = useRouter()
     const [email, setEmail] = useState("")
@@ -122,27 +157,20 @@ function Signup() {
                 <title>Signup</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', width: '900px' }}>
+            <BodyContainer>
                 <div style={{ position: 'relative', width: 'auto' }}>
-                    <h1 style={{
-                        fontFamily: "'Poppins', sans-serif",
-                        fontWeight: '400',
-                        letterSpacing: '3px',
-                        padding: '0px 20px 0px 0px',
-                        margin: '0',
-                        position: 'absolute',
-                        bottom: '0',
-                        right: '0',
-                        fontSize: '120px',
-
-                    }}>
+                    <SignupTitle>
                         SIGN UP
-                    </h1>
+                    </SignupTitle>
                 </div>
                 <Box
                     sx={{
                         borderLeft: '2.5px solid #1E1E1E',
-                        padding: '20px'
+                        padding: '20px',
+                        height: '320px',
+                        '@media screen and (max-width: 450px)': {
+                            borderLeft: 'none',
+                        },
                     }}
                 >
                     <Stack
@@ -158,7 +186,7 @@ function Signup() {
                             type="text"
                             helperText={emailAuthErrorHelperText}
                             onChange={(e) => { handleEmailChange(e); setEmailAuthErrorHelperText(""); setEmailAuthError(false) }}
-                            inputProps = {inputTextProps}
+                            inputProps={inputTextProps}
                         />
                         <CssTextField
                             error={signUpError}
@@ -167,7 +195,7 @@ function Signup() {
                             type="password"
                             helperText={passwordHelperText}
                             onChange={(e) => { handlePasswordChange(e); setPasswordHelperText(""); setSignUpError(false) }}
-                            inputProps = {inputTextProps}
+                            inputProps={inputTextProps}
                         />
                         <CssTextField
                             error={signUpError}
@@ -176,7 +204,7 @@ function Signup() {
                             type="password"
                             helperText={passwordHelperText}
                             onChange={(e) => { handlePasswordCheckChange(e); setPasswordHelperText(""); setSignUpError(false) }}
-                            inputProps = {inputTextProps}
+                            inputProps={inputTextProps}
                         />
 
                         <SignupLoginButton
@@ -187,7 +215,7 @@ function Signup() {
                         </SignupLoginButton>
                     </Stack>
                 </Box>
-            </div>
+            </BodyContainer>
         </div>
     )
 }
