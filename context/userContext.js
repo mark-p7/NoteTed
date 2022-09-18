@@ -43,6 +43,7 @@ export default function UserContextComp({ children }) {
       console.log("user added to firestore")
     }).catch((err)=>{
       console.log(err.message)
+      return err.message
     })
   }
 
