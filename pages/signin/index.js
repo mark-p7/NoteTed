@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 import Head from 'next/head'
+import Navbar from '../../components/Navbar'
 
 function SignIn() {
     const router = useRouter()
@@ -33,28 +34,31 @@ function SignIn() {
     }, [loadingUser, user])
 
     return (
-        <div>
+        <>
             <Head>
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <h1>
-                SignIn
-            </h1>
+            <Navbar firstHelperText="Don't have an account?" secondHelperText="SIGNUP" />
+            <div>
+                <h1>
+                    SignIn
+                </h1>
 
-            <form onSubmit={handleSignIn}>
-                <input
-                    type="text"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type='submit'>Submit</button>
-            </form>
+                <form onSubmit={handleSignIn}>
+                    <input
+                        type="text"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type='submit'>Submit</button>
+                </form>
 
-        </div>
+            </div>
+        </>
     )
 }
 

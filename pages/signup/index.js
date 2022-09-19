@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 import Head from 'next/head'
 import { useTheme, TextField, Box, Stack, styled, Button } from '@mui/material'
+import Navbar from '../../components/Navbar'
 
 const CssTextField = styled(TextField)({
     width: '250px',
@@ -68,7 +69,7 @@ const SignupTitle = styled('h1')({
     bottom: '0',
     right: '0',
     fontSize: '120px',
-    ['@media (max-width:680px)']: { // eslint-disable-line no-useless-computed-key
+    ['@media (max-width:680px)']: {
         fontSize: '80px',
         right: 'auto',
         width: 'auto',
@@ -76,7 +77,7 @@ const SignupTitle = styled('h1')({
         width: '100%',
         textAlign: 'center'
     },
-    ['@media (max-width:450px)']: { // eslint-disable-line no-useless-computed-key
+    ['@media (max-width:450px)']: {
         fontSize: '50px',
     }
 });
@@ -85,7 +86,7 @@ const BodyContainer = styled('div')({
     display: 'grid',
     gridTemplateColumns: '60% 40%',
     width: '900px',
-    ['@media (max-width:680px)']: { // eslint-disable-line no-useless-computed-key
+    ['@media (max-width:680px)']: {
         gridTemplateColumns: 'none',
         gridTemplateRows: '30% 70%',
         height: '90vh',
@@ -152,71 +153,75 @@ function Signup() {
 
 
     return (
-        <div style={{ height: '100vh', background: theme.palette.primary.main, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <>
             <Head>
                 <title>Signup</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <BodyContainer>
-                <div style={{ position: 'relative', width: 'auto' }}>
-                    <SignupTitle>
-                        SIGN UP
-                    </SignupTitle>
-                </div>
-                <Box
-                    sx={{
-                        borderLeft: '2.5px solid #1E1E1E',
-                        padding: '20px',
-                        height: '320px',
-                        '@media screen and (max-width: 450px)': {
-                            borderLeft: 'none',
-                        },
-                    }}
-                >
-                    <Stack
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={2}
-                    >
-                        <CssTextField
-                            error={emailAuthError}
-                            variant='outlined'
-                            label="EMAIL"
-                            type="text"
-                            helperText={emailAuthErrorHelperText}
-                            onChange={(e) => { handleEmailChange(e); setEmailAuthErrorHelperText(""); setEmailAuthError(false) }}
-                            inputProps={inputTextProps}
-                        />
-                        <CssTextField
-                            error={signUpError}
-                            variant='outlined'
-                            label="PASSWORD"
-                            type="password"
-                            helperText={passwordHelperText}
-                            onChange={(e) => { handlePasswordChange(e); setPasswordHelperText(""); setSignUpError(false) }}
-                            inputProps={inputTextProps}
-                        />
-                        <CssTextField
-                            error={signUpError}
-                            variant='outlined'
-                            label="CONFIRM PASSWORD"
-                            type="password"
-                            helperText={passwordHelperText}
-                            onChange={(e) => { handlePasswordCheckChange(e); setPasswordHelperText(""); setSignUpError(false) }}
-                            inputProps={inputTextProps}
-                        />
-
-                        <SignupLoginButton
-                            variant='contained'
-                            onClick={() => { handleSignup() }}
-                        >
+            <Navbar firstHelperText="Already have an account?" secondHelperText="LOGIN" />
+            <div style={{ height: 'calc(100vh - 80px)', background: theme.palette.primary.main, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                
+                <BodyContainer>
+                    <div style={{ position: 'relative', width: 'auto' }}>
+                        <SignupTitle>
                             SIGN UP
-                        </SignupLoginButton>
-                    </Stack>
-                </Box>
-            </BodyContainer>
-        </div>
+                        </SignupTitle>
+                    </div>
+                    <Box
+                        sx={{
+                            borderLeft: '2.5px solid #1E1E1E',
+                            padding: '20px',
+                            height: '320px',
+                            '@media screen and (max-width: 450px)': {
+                                borderLeft: 'none',
+                            },
+                        }}
+                    >
+                        <Stack
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}
+                        >
+                            <CssTextField
+                                error={emailAuthError}
+                                variant='outlined'
+                                label="EMAIL"
+                                type="text"
+                                helperText={emailAuthErrorHelperText}
+                                onChange={(e) => { handleEmailChange(e); setEmailAuthErrorHelperText(""); setEmailAuthError(false) }}
+                                inputProps={inputTextProps}
+                            />
+                            <CssTextField
+                                error={signUpError}
+                                variant='outlined'
+                                label="PASSWORD"
+                                type="password"
+                                helperText={passwordHelperText}
+                                onChange={(e) => { handlePasswordChange(e); setPasswordHelperText(""); setSignUpError(false) }}
+                                inputProps={inputTextProps}
+                            />
+                            <CssTextField
+                                error={signUpError}
+                                variant='outlined'
+                                label="CONFIRM PASSWORD"
+                                type="password"
+                                helperText={passwordHelperText}
+                                onChange={(e) => { handlePasswordCheckChange(e); setPasswordHelperText(""); setSignUpError(false) }}
+                                inputProps={inputTextProps}
+                            />
+
+                            <SignupLoginButton
+                                variant='contained'
+                                onClick={() => { handleSignup() }}
+                            >
+                                SIGN UP
+                            </SignupLoginButton>
+                        </Stack>
+                    </Box>
+                </BodyContainer>
+            </div>
+        </>
     )
 }
 

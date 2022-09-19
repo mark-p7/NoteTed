@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { Stack, Button, useTheme } from '@mui/material'
 import Link from 'next/link'
 // import { TitleDiv, TitleHeader } from './HomePageStyles'
+import Navbar from '../components/Navbar'
 
 export default function Home() {
   const theme = useTheme()
@@ -33,7 +34,8 @@ export default function Home() {
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ height: '100vh', background: theme.palette.primary.main, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Navbar/>
+      <main style={{ height: 'calc(100vh - 80px)', background: theme.palette.primary.main, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
         <Stack
           direction="column"
