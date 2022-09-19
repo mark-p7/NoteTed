@@ -37,7 +37,7 @@ function Navbar(props) {
         letterSpacing: '1px',
         paddingTop: '20px'
       }}>
-        <p>{props.firstHelperText} <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => Router.push('/signin')}>{props.secondHelperText}</span></p>
+        <p>{props.firstHelperText} <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => Router.push(`/${props.route}`)}>{props.secondHelperText}</span></p>
       </div>
       <div style={{ gridArea: 'c', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '20px' }}>
         <Image src="/images/MiniLogo.png" alt="Logo" width="56.24" height="55.2" style={{ cursor: 'pointer' }} onClick={() => Router.push('/')} />

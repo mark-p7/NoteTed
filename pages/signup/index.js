@@ -158,7 +158,7 @@ function Signup() {
                 <title>Signup</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Navbar firstHelperText="Already have an account?" secondHelperText="LOGIN" />
+            <Navbar firstHelperText="Already have an account?" secondHelperText="LOGIN" route="signin" />
             <div style={{ height: 'calc(100vh - 80px)', background: theme.palette.primary.main, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 
                 <BodyContainer>

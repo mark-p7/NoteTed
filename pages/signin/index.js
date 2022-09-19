@@ -39,7 +39,7 @@ function SignIn() {
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Navbar firstHelperText="Don't have an account?" secondHelperText="SIGNUP" />
+            <Navbar firstHelperText="Don't have an account?" secondHelperText="SIGNUP" route="signup" />
             <div>
                 <h1>
                     SignIn
