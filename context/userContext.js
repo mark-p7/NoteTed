@@ -19,8 +19,11 @@ export default function UserContextComp({ children }) {
   const [user, setUser] = useState(null)
   const [loadingUser, setLoadingUser] = useState(true) // Helpful, to update the UI accordingly.
 
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+  async function login(email, password) {
+    return signInWithEmailAndPassword(auth, email, password).catch((err) => {
+      console.log(err.message)
+      return err.message
+    })
   }
 
   async function signOutOfUser() {

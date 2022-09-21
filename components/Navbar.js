@@ -8,7 +8,7 @@ const BodyContainer = styled('div')({
   height: '80px',
   width: '100%',
   display: 'grid',
-  gridTemplateAreas: '"a . b"',
+  gridTemplateAreas: '"c . b"',
   gridTemplateColumns: '20% 50% 30%',
   ['@media (max-width:960px)']: {
     gridTemplateColumns: '30% 30% 40%',
@@ -24,9 +24,6 @@ function Navbar(props) {
   return (
     <BodyContainer
     >
-      <div style={{ gridArea: 'a', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '20px' }}>
-        <Image src="/images/Logo.png" alt="Logo" width="171" height="57" style={{ cursor: 'pointer' }} onClick={() => Router.push('/')} />
-      </div>
       <div style={{
         gridArea: 'b',
         display: 'flex',

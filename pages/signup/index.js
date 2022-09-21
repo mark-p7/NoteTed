@@ -97,13 +97,13 @@ const BodyContainer = styled('div')({
 function Signup() {
     const router = useRouter()
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordCheck, setPasswordCheck] = useState("")
-    const [passwordHelperText, setPasswordHelperText] = useState("")
     const { signUp, loadingUser, user } = useUser()
     const [signUpError, setSignUpError] = useState(false)
     const [emailAuthError, setEmailAuthError] = useState(false)
     const [emailAuthErrorHelperText, setEmailAuthErrorHelperText] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordCheck, setPasswordCheck] = useState("")
+    const [passwordHelperText, setPasswordHelperText] = useState("")
     const theme = useTheme()
     const inputTextProps = {
         style: {
