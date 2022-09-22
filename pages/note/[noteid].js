@@ -5,7 +5,7 @@ import { useUser } from "../../context/userContext"
 import { getNoteData } from '../../fetchData/getNoteData'
 import { updateNote } from '../../setData/updateNote'
 import { deleteNote } from '../../deleteData/deleteNote'
-
+import ResponsiveAppBar from '../../components/ResponsiveAppBar'
 export default function NoteID({ data }) {
     const { id, noteDocData } = data
     const router = useRouter()
@@ -43,6 +43,7 @@ export default function NoteID({ data }) {
 
     return (
         <div>
+            <ResponsiveAppBar />
             <form onSubmit={handleEditNote}>
                 <input
                     type="text"

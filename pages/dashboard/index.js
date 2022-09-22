@@ -4,6 +4,7 @@ import { useUser } from "../../context/userContext"
 import { collection, query, where, getDocs, getFirestore, getDoc, doc } from "firebase/firestore";
 import Link from 'next/link'
 import { deleteNote } from '../../deleteData/deleteNote'
+import ResponsiveAppBar from '../../components/ResponsiveAppBar';
 
 function Dashboard() {
     const router = useRouter()
@@ -56,6 +57,7 @@ function Dashboard() {
 
     return (
         <div>
+            <ResponsiveAppBar />
             <h1>Dashboard</h1>
             <button onClick={() => router.push("/note")}>Create a new Note</button>
             <div>

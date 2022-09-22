@@ -2,6 +2,7 @@ import { doc, getFirestore, setDoc, updateDoc, arrayUnion } from 'firebase/fires
 import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
+import ResponsiveAppBar from '../../components/ResponsiveAppBar'
 
 function Note() {
     const router = useRouter()
@@ -46,6 +47,7 @@ function Note() {
 
     return (
         <div>
+            <ResponsiveAppBar />
             <form onSubmit={handleNewNote}>
                 <input
                     type="text"
