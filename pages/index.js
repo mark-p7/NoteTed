@@ -1,22 +1,13 @@
 import Head from 'next/head'
-// import Link from '../src/Link';
 import { useEffect } from 'react'
 import { useUser } from '../context/userContext'
 import { useRouter } from 'next/router'
 import { Stack, Button, useTheme } from '@mui/material'
 import Link from 'next/link'
-// import { TitleDiv, TitleHeader } from './HomePageStyles'
 import Navbar from '../components/Navbar'
 
 export default function Home() {
   const theme = useTheme()
-  //   <Link href="/about">
-  //      <a>About Us</a>
-  //   </Link>
-  // console.log(theme.palette.primary.main);
-  //   <Button variant="contained" component={Link} noLinkStyle href="/signup">
-  //      SIGN UP
-  //   </Button>
   const router = useRouter()
   const { loadingUser, user } = useUser()
 

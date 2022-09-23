@@ -1,4 +1,4 @@
-import { doc, getFirestore, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
+import { doc, getFirestore, setDoc, updateDoc, arrayUnion, Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
@@ -33,6 +33,7 @@ function Note() {
                 NoteID: noteID,
                 NoteTitle: noteTitle,
                 NoteContent: noteContent,
+                CreationDate: Timestamp.now()
             }).then(() => {
                 updateDoc(doc(db, 'users', user.uid), {
                     notes: arrayUnion(noteID)
