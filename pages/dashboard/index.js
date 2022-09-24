@@ -1,10 +1,11 @@
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 import { collection, query, where, getDocs, getFirestore, getDoc, doc } from "firebase/firestore";
 import Link from 'next/link'
 import { deleteNote } from '../../deleteData/deleteNote'
 import ResponsiveAppBar from '../../components/ResponsiveAppBar';
+import { NavbarButton } from '../../components/ResponsiveAppBar';
 import { styled } from '@mui/material';
 
 const BodyContainer = styled('div')({
@@ -43,13 +44,14 @@ function Dashboard() {
                                         {
                                             id: doc.id,
                                             title: data.NoteTitle,
-                                            content: data.NoteContent
+                                            content: data.NoteContent,
+                                            creationDate: data.CreationDate
                                         }
                                     )
                                 })
-                                jsxNotesArray.forEach(item => {
-                                    console.log(item);
-                                })
+                                // jsxNotesArray.forEach(item => {
+                                //     console.log(item);
+                                // })
                                 setNotes(jsxNotesArray)
                                 const notesCopy = [...jsxNotesArray]
                                 const numberOfChunks = notesCopy.length >= 3 ? 3 : notesCopy.length
@@ -65,7 +67,6 @@ function Dashboard() {
     }, [loadingUser, user])
 
     useEffect(() => {
-        console.log(splitNotesArray);
         setBusy(false)
     }, [splitNotesArray])
 
@@ -79,15 +80,31 @@ function Dashboard() {
     }
 
     function splitToChunks(array, parts) {
-        // Sort by timestamps
-        array.forEach(item => {
-            console.log(item);
-        })
-        
-        let result = [];
-        for (let i = parts; i > 0; i--) {
-            result.push(array.splice(0, Math.ceil(array.length / i)));
-            console.log(result);
+        array.sort((firstNote, secondNote) =>
+            secondNote.creationDate - firstNote.creationDate
+        )
+        let result = []
+        if (parts == 1) {
+            result.push([array[0]])
+            return result
+        }
+        if (parts == 2) {
+            result.push([array[0]])
+            result.push([array[1]])
+            return result
+        }
+        var currentColumn = 0;
+        for (let i = 0; i < array.length; i++) {
+            if (result[currentColumn] == null) {
+                result.push([array[i]])
+            } else {
+                result[currentColumn].push(array[i])
+            }
+            if (currentColumn == 2) {
+                currentColumn = 0
+            } else {
+                currentColumn = currentColumn + 1
+            }
         }
         return result;
     }
@@ -102,31 +119,32 @@ function Dashboard() {
             <BodyContainer>
                 {
                     isBusy ? console.log('still busy') :
-                    splitNotesArray.map((noteArrayColumn, index) =>
-                        <div key={index} className={noteColumnArray[index]} style={{ flex: '25%', maxWidth: '33%', padding: '5px 8px'}}>
-                            {noteArrayColumn.map(note => (
-                                <div key={note.id} style={{ padding: '20px', border: '1px solid black', margin: '10px', width: '100%' }}>
-                                    <h1>
-                                        {note.title}
-                                    </h1>
-                                    <p>
-                                        {note.content}
-                                    </p>
-                                    <Link href={`/note/${note.id}`} passHref>
+                        splitNotesArray.map((noteArrayColumn, index) =>
+                            <div key={index} className={noteColumnArray[index]} style={{ flex: '25%', maxWidth: '33%', padding: '5px 8px' }}>
+                                {noteArrayColumn.map(note => (
+                                    <div key={note.id} style={{ padding: '20px', border: '3px solid black', borderRadius: '20px', margin: '10px', width: '100%' }}>
+                                        <h1>
+                                            {note.title}
+                                        </h1>
+                                        <p>
+                                            {note.content}
+                                        </p>
+                                        {/* <Link href={`/note/${note.id}`} passHref>
                                         <a>
-                                            <button>
-                                                edit
-                                            </button>
                                         </a>
-                                    </Link>
-                                    <br />
-                                    <button onClick={() => handleDeleteNote(note.id)}>
-                                        delete
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )
+                                    </Link> */}
+                                        <NavbarButton onClick={() => Router.push(`/note/${note.id}`)}>
+                                            edit
+                                        </NavbarButton>
+
+                                        <br />
+                                        <NavbarButton onClick={() => handleDeleteNote(note.id)}>
+                                            delete
+                                        </NavbarButton>
+                                    </div>
+                                ))}
+                            </div>
+                        )
                 }
                 <div>
 

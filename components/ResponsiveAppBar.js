@@ -15,7 +15,14 @@ import { useUser } from "../context/userContext.js"
 import { styled } from '@mui/material'
 import { useRouter } from 'next/router';
 
-const NavbarButton = styled(Button)({
+
+const MenuItemCustom = styled(MenuItem)({
+  '&:hover': {
+    background: 'white'
+  }
+});
+
+export const NavbarButton = styled(Button)({
   fontFamily: "'Poppins', sans-serif",
   fontWeight: '400',
   borderRadius: '0px',
@@ -23,15 +30,15 @@ const NavbarButton = styled(Button)({
   color: '#1E1E1E',
   cursor: 'pointer',
   position: 'relative',
-  padding: '7.5px 40px',
+  padding: '7.5px 30px',
   background: 'white',
-  fontSize: '20px',
+  fontSize: '15px',
   transition: 'all 0.2s',
+  boxShadow: 'none',
   '&:hover': {
-    boxShadow: '0.3em 0.3em 0 0 white',
     color: 'white',
     background: '#1E1E1E',
-    padding: '7.5px 50px'
+    boxShadow: 'none'
   }
 });
 
@@ -124,11 +131,11 @@ const ResponsiveAppBar = () => {
                 }}
               >
                 {pages.map((page, index) => (
-                  <MenuItem key={index} onClick={handleCloseNavMenu}>
+                  <MenuItemCustom key={index} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">
                       {page}
                     </Typography>
-                  </MenuItem>
+                  </MenuItemCustom>
                 ))}
               </Menu>
             </Box>

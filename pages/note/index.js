@@ -33,7 +33,7 @@ function Note() {
                 NoteID: noteID,
                 NoteTitle: noteTitle,
                 NoteContent: noteContent,
-                CreationDate: Timestamp.now()
+                CreationDate: (Date.now()/1000)
             }).then(() => {
                 updateDoc(doc(db, 'users', user.uid), {
                     notes: arrayUnion(noteID)
