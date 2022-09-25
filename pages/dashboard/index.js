@@ -5,15 +5,69 @@ import { collection, query, where, getDocs, getFirestore, getDoc, doc } from "fi
 import Link from 'next/link'
 import { deleteNote } from '../../deleteData/deleteNote'
 import ResponsiveAppBar from '../../components/ResponsiveAppBar';
-import { NavbarButton } from '../../components/ResponsiveAppBar';
 import { styled } from '@mui/material';
+
+const NotesDiv = styled('div')({
+    flex: '20%',
+    maxWidth: '33.333%',
+    padding: '5px 8px',
+    ['@media (max-width:920px)']: {
+        flex: '40%',
+        flexWrap: 'wrap',
+        maxWidth: '50%',
+    },
+    ['@media (max-width:750px)']: {
+        flex: '50%',
+        maxWidth: '100%',
+    },
+});
+
+const TitleDiv = styled('div')({
+    width: '80%',
+    textAlign: 'left',
+    color: 'black',
+    fontSize: '50px',
+    margin: '20px auto 20px auto',
+    ['@media (max-width:800px)']: {
+        textAlign: 'center',
+        fontSize: '30px',
+    },
+    ['@media (max-width:480px)']: {
+        fontSize: '25px',
+    },
+});
 
 const BodyContainer = styled('div')({
     display: 'flex',
     flexWrap: 'wrap',
-    padding: '0 4px',
     textAlign: 'left',
-    margin: 'auto'
+    padding: '0px 10px',
+    width: 'auto',
+});
+
+const LinkButton = styled('a')({
+    padding: '12px',
+    textDecoration: 'none',
+    position: 'relative',
+    color: 'black',
+    cursor: 'pointer',
+    fontWeight: '600',
+    '&:after': {
+        background: 'none repeat scroll 0 0 transparent',
+        bottom: '0',
+        content: '""',
+        display: 'block',
+        height: '2px',
+        left: '50%',
+        position: 'absolute',
+        background: '#000',
+        transition: 'width 0.3s ease 0s, left 0.3s ease 0s',
+        width: '0'
+    },
+    '&:hover:after': {
+        width: '100%',
+        left: '0',
+    },
 });
 
 function Dashboard() {
@@ -49,6 +103,7 @@ function Dashboard() {
                                         }
                                     )
                                 })
+                                // Print notes for debugging
                                 // jsxNotesArray.forEach(item => {
                                 //     console.log(item);
                                 // })
@@ -110,71 +165,47 @@ function Dashboard() {
     }
 
     return (
-        <div style={{ width: '100%', textAlign: 'center' }}>
+        <div style={{ width: '100%', textAlign: 'center', padding: '0px' }}>
             <ResponsiveAppBar />
-            <div style={{ width: '80%', textAlign: 'left', color: 'black', fontSize: '50px', margin: '20px auto 20px auto' }}>
-                Dashboard
-            </div>
-            {/* <button onClick={() => router.push("/note")}>Create a new Note</button> */}
+            <TitleDiv>
+                <h1>DASHBOARD</h1>
+            </TitleDiv>
             <BodyContainer>
                 {
                     isBusy ? console.log('still busy') :
                         splitNotesArray.map((noteArrayColumn, index) =>
-                            <div key={index} className={noteColumnArray[index]} style={{ flex: '25%', maxWidth: '33%', padding: '5px 8px' }}>
+                            <NotesDiv key={index} className={noteColumnArray[index]}>
                                 {noteArrayColumn.map(note => (
-                                    <div key={note.id} style={{ padding: '20px', border: '3px solid black', borderRadius: '20px', margin: '10px', width: '100%' }}>
+                                    <div key={note.id}
+                                        style={{
+                                            padding: '20px',
+                                            border: '3px solid black',
+                                            borderRadius: '20px',
+                                            marginTop: '8px',
+                                            width: '100%',
+                                            verticalAlign: 'middle'
+                                        }}>
                                         <h1>
                                             {note.title}
                                         </h1>
                                         <p>
                                             {note.content}
                                         </p>
-                                        {/* <Link href={`/note/${note.id}`} passHref>
-                                        <a>
-                                        </a>
-                                    </Link> */}
-                                        <NavbarButton onClick={() => Router.push(`/note/${note.id}`)}>
-                                            edit
-                                        </NavbarButton>
-
-                                        <br />
-                                        <NavbarButton onClick={() => handleDeleteNote(note.id)}>
-                                            delete
-                                        </NavbarButton>
+                                        <div style={{ textAlign: 'right' }}>
+                                            <Link href={`/note/${note.id}`} passHref>
+                                                <LinkButton>
+                                                    EDIT
+                                                </LinkButton>
+                                            </Link>
+                                            <LinkButton onClick={() => handleDeleteNote(note.id)}>
+                                                DELETE
+                                            </LinkButton>
+                                        </div>
                                     </div>
                                 ))}
-                            </div>
+                            </NotesDiv>
                         )
                 }
-                <div>
-
-                </div>
-                <div>
-
-                </div>
-                <div>
-
-                </div>
-                {/* {notes.map(note =>
-                    <div key={note.id} style={{ padding: '20px', border: '1px solid black', margin: '10px' }}>
-                        <h1>
-                            {note.title}
-                        </h1>
-                        <p>
-                            {note.content}
-                        </p>
-                        <Link href={`/note/${note.id}`} passHref>
-                            <a>
-                                <button>
-                                    edit
-                                </button>
-                            </a>
-                        </Link>
-                        <br />
-                        <button onClick={() => handleDeleteNote(note.id)}>
-                            delete
-                        </button>
-                    </div>)} */}
             </BodyContainer>
         </div>
     )
