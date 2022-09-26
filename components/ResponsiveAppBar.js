@@ -98,7 +98,7 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'none', md: 'flex' }
               }}
             >
-              <Image src="/images/MiniLogo.png" alt="Logo" width="56.24" height="56.24" style={{ cursor: 'pointer' }} onClick={() => Router.push('/')} />
+              <Image src="/images/MiniLogo.png" alt="Logo" width="56.24" height="56.24" style={{ cursor: 'pointer' }} onClick={() => Router.push('/dashboard')} />
             </Box>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { deleteNote } from '../../deleteData/deleteNote'
 import ResponsiveAppBar from '../../components/ResponsiveAppBar';
 import { styled } from '@mui/material';
+import Head from 'next/head';
+import { TitleDiv } from '../../components/Titlediv';
 
 const NotesDiv = styled('div')({
     flex: '33.333%',
@@ -19,21 +21,6 @@ const NotesDiv = styled('div')({
     ['@media (max-width:750px)']: {
         flex: '100%',
         maxWidth: '100%',
-    },
-});
-
-const TitleDiv = styled('div')({
-    width: '80%',
-    textAlign: 'left',
-    color: 'black',
-    fontSize: '50px',
-    margin: '20px auto 20px auto',
-    ['@media (max-width:800px)']: {
-        textAlign: 'center',
-        fontSize: '30px',
-    },
-    ['@media (max-width:480px)']: {
-        fontSize: '25px',
     },
 });
 
@@ -165,49 +152,55 @@ function Dashboard() {
     }
 
     return (
-        <div style={{ width: '100%', textAlign: 'center', padding: '0px' }}>
-            <ResponsiveAppBar />
-            <TitleDiv>
-                <h1>DASHBOARD</h1>
-            </TitleDiv>
-            <BodyContainer>
-                {
-                    isBusy ? console.log('still busy') :
-                        splitNotesArray.map((noteArrayColumn, index) =>
-                            <NotesDiv key={index} className={noteColumnArray[index]}>
-                                {noteArrayColumn.map(note => (
-                                    <div key={note.id}
-                                        style={{
-                                            padding: '20px',
-                                            border: '3px solid black',
-                                            borderRadius: '20px',
-                                            marginTop: '8px',
-                                            width: '100%',
-                                            verticalAlign: 'middle'
-                                        }}>
-                                        <h1 style={{wordWrap: 'break-word'}}>
-                                            {note.title}
-                                        </h1>
-                                        <p style={{wordWrap: 'break-word'}}>
-                                            {note.content}
-                                        </p>
-                                        <div style={{ textAlign: 'right' }}>
-                                            <Link href={`/note/${note.id}`} passHref>
-                                                <LinkButton>
-                                                    EDIT
+        <>
+            <Head>
+                <title>Dashboard</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <div style={{ width: '100%', textAlign: 'center', padding: '0px' }}>
+                <ResponsiveAppBar />
+                <TitleDiv>
+                    <h1>DASHBOARD</h1>
+                </TitleDiv>
+                <BodyContainer>
+                    {
+                        isBusy ? console.log('still busy') :
+                            splitNotesArray.map((noteArrayColumn, index) =>
+                                <NotesDiv key={index} className={noteColumnArray[index]}>
+                                    {noteArrayColumn.map(note => (
+                                        <div key={note.id}
+                                            style={{
+                                                padding: '20px',
+                                                border: '3px solid black',
+                                                borderRadius: '20px',
+                                                marginTop: '8px',
+                                                width: '100%',
+                                                verticalAlign: 'middle'
+                                            }}>
+                                            <h1 style={{ wordWrap: 'break-word' }}>
+                                                {note.title}
+                                            </h1>
+                                            <p style={{ wordWrap: 'break-word' }}>
+                                                {note.content}
+                                            </p>
+                                            <div style={{ textAlign: 'right' }}>
+                                                <Link href={`/note/${note.id}`} passHref>
+                                                    <LinkButton>
+                                                        EDIT
+                                                    </LinkButton>
+                                                </Link>
+                                                <LinkButton onClick={() => handleDeleteNote(note.id)}>
+                                                    DELETE
                                                 </LinkButton>
-                                            </Link>
-                                            <LinkButton onClick={() => handleDeleteNote(note.id)}>
-                                                DELETE
-                                            </LinkButton>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </NotesDiv>
-                        )
-                }
-            </BodyContainer>
-        </div>
+                                    ))}
+                                </NotesDiv>
+                            )
+                    }
+                </BodyContainer>
+            </div>
+        </>
     )
 }
 
