@@ -8,16 +8,16 @@ import ResponsiveAppBar from '../../components/ResponsiveAppBar';
 import { styled } from '@mui/material';
 
 const NotesDiv = styled('div')({
-    flex: '20%',
+    flex: '33.333%',
     maxWidth: '33.333%',
     padding: '5px 8px',
     ['@media (max-width:920px)']: {
-        flex: '40%',
+        flex: '50%',
         flexWrap: 'wrap',
         maxWidth: '50%',
     },
     ['@media (max-width:750px)']: {
-        flex: '50%',
+        flex: '100%',
         maxWidth: '100%',
     },
 });
@@ -185,10 +185,10 @@ function Dashboard() {
                                             width: '100%',
                                             verticalAlign: 'middle'
                                         }}>
-                                        <h1>
+                                        <h1 style={{wordWrap: 'break-word'}}>
                                             {note.title}
                                         </h1>
-                                        <p>
+                                        <p style={{wordWrap: 'break-word'}}>
                                             {note.content}
                                         </p>
                                         <div style={{ textAlign: 'right' }}>
