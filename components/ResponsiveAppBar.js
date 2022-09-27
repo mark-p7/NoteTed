@@ -15,7 +15,6 @@ import { useUser } from "../context/userContext.js"
 import { styled } from '@mui/material'
 import { useRouter } from 'next/router';
 
-
 const MenuItemCustom = styled(MenuItem)({
   '&:hover': {
     background: 'white'
@@ -141,7 +140,7 @@ const ResponsiveAppBar = () => {
             </Box>
             <Box
               sx={{
-                mr: 2,
+                margin: '5px',
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
               }}

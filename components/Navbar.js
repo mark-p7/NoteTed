@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-// import Logo from '../images/Logo.png'
 import Router from 'next/router'
 import styled from '@emotion/styled'
 
@@ -20,7 +19,6 @@ const BodyContainer = styled('div')({
 });
 
 function Navbar(props) {
-  // console.log(Logo)
   return (
     <BodyContainer
     >

@@ -1,67 +1,18 @@
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { React, useState, useEffect } from 'react'
 import { useUser } from "../../context/userContext"
 import { collection, query, where, getDocs, getFirestore, getDoc, doc } from "firebase/firestore";
 import Link from 'next/link'
 import { deleteNote } from '../../deleteData/deleteNote'
 import ResponsiveAppBar from '../../components/ResponsiveAppBar';
-import { styled } from '@mui/material';
 import Head from 'next/head';
 import { TitleDiv } from '../../components/Titlediv';
-
-const NotesDiv = styled('div')({
-    flex: '33.333%',
-    maxWidth: '33.333%',
-    padding: '5px 8px',
-    ['@media (max-width:920px)']: {
-        flex: '50%',
-        flexWrap: 'wrap',
-        maxWidth: '50%',
-    },
-    ['@media (max-width:750px)']: {
-        flex: '100%',
-        maxWidth: '100%',
-    },
-});
-
-const BodyContainer = styled('div')({
-    display: 'flex',
-    flexWrap: 'wrap',
-    textAlign: 'left',
-    padding: '0px 10px',
-    width: 'auto',
-});
-
-const LinkButton = styled('a')({
-    padding: '12px',
-    textDecoration: 'none',
-    position: 'relative',
-    color: 'black',
-    cursor: 'pointer',
-    fontWeight: '600',
-    '&:after': {
-        background: 'none repeat scroll 0 0 transparent',
-        bottom: '0',
-        content: '""',
-        display: 'block',
-        height: '2px',
-        left: '50%',
-        position: 'absolute',
-        background: '#000',
-        transition: 'width 0.3s ease 0s, left 0.3s ease 0s',
-        width: '0'
-    },
-    '&:hover:after': {
-        width: '100%',
-        left: '0',
-    },
-});
+import { NotesColumn, BodyContainer, LinkButton, NoteDiv } from '../../components/dashboard/Dashboard';
 
 function Dashboard() {
     const router = useRouter()
     const { loadingUser, user } = useUser()
     const db = getFirestore()
-    const [notes, setNotes] = useState([]);
     const [splitNotesArray, setSplitNotesArray] = useState([])
     const noteColumnArray = ["first-column", "second-column", "third-column"]
     const [isBusy, setBusy] = useState(true)
@@ -94,10 +45,8 @@ function Dashboard() {
                                 // jsxNotesArray.forEach(item => {
                                 //     console.log(item);
                                 // })
-                                setNotes(jsxNotesArray)
-                                const notesCopy = [...jsxNotesArray]
-                                const numberOfChunks = notesCopy.length >= 3 ? 3 : notesCopy.length
-                                setSplitNotesArray(splitToChunks(notesCopy, numberOfChunks))
+                                const numberOfChunks = jsxNotesArray.length >= 3 ? 3 : jsxNotesArray.length
+                                setSplitNotesArray(splitToChunks(jsxNotesArray, numberOfChunks))
                             })
                         }
                     } catch (err) {
@@ -166,17 +115,9 @@ function Dashboard() {
                     {
                         isBusy ? console.log('still busy') :
                             splitNotesArray.map((noteArrayColumn, index) =>
-                                <NotesDiv key={index} className={noteColumnArray[index]}>
+                                <NotesColumn key={index} className={noteColumnArray[index]}>
                                     {noteArrayColumn.map(note => (
-                                        <div key={note.id}
-                                            style={{
-                                                padding: '20px',
-                                                border: '3px solid black',
-                                                borderRadius: '20px',
-                                                marginTop: '8px',
-                                                width: '100%',
-                                                verticalAlign: 'middle'
-                                            }}>
+                                        <NoteDiv key={note.id}>
                                             <h1 style={{ wordWrap: 'break-word' }}>
                                                 {note.title}
                                             </h1>
@@ -193,9 +134,9 @@ function Dashboard() {
                                                     DELETE
                                                 </LinkButton>
                                             </div>
-                                        </div>
+                                        </NoteDiv>
                                     ))}
-                                </NotesDiv>
+                                </NotesColumn>
                             )
                     }
                 </BodyContainer>
