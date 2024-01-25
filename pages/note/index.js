@@ -71,7 +71,7 @@ function Note() {
                                 fontFamily: "'Poppins', sans-serif",
                                 fontWeight: '400',
                                 fontSize: '30px'
-                            }, maxLength: 16,
+                            }
                         }}
                     />
                     <CssTextField
@@ -90,7 +90,7 @@ function Note() {
                                 fontFamily: "'Poppins', sans-serif",
                                 fontWeight: '400',
                                 fontSize: '20px'
-                            }, maxLength: 280,
+                            }
                         }}
                     />
                 </Stack>

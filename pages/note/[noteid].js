@@ -75,7 +75,7 @@ export default function NoteID({ data }) {
                                 fontFamily: "'Poppins', sans-serif",
                                 fontWeight: '400',
                                 fontSize: '30px'
-                            }, maxLength: 16,
+                            }
                         }}
                     />
                     <CssTextField
@@ -94,7 +94,7 @@ export default function NoteID({ data }) {
                                 fontFamily: "'Poppins', sans-serif",
                                 fontWeight: '400',
                                 fontSize: '20px'
-                            }, maxLength: 280,
+                            }
                         }}
                     />
                 </Stack>
